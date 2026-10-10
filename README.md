@@ -4,7 +4,7 @@
 
 **Every value on screen is computed.** Keys, hashes, signatures and certificates come from your browser's own cryptography (Web Crypto), and they interoperate with OpenSSL: the same signature bytes, the same certificate checks.
 
-> **Live:** [mahtem.rann.workers.dev](https://mahtem.rann.workers.dev)
+> **Live:** [mahtem.rann.workers.dev](https://mahtem.rann.workers.dev) · **Version 1.0.0** ([changelog](CHANGELOG.md))
 > Built for CS486 Computer System Security at HiLCoE. Free to use in any classroom.
 
 ## What students learn

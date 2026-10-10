@@ -7,6 +7,7 @@ import { LearnView, type LessonProgress, initialLessonProgress } from './ui/lear
 import { ExercisesView } from './ui/exercises/ExercisesView.tsx';
 import type { AttackRun } from './state/attacks.ts';
 import { Header, type View } from './ui/shell/Header.tsx';
+import { Footer } from './ui/shell/Footer.tsx';
 import { VerifyView } from './ui/verify/VerifyView.tsx';
 import type { Anchor, ReceivedBundle } from './ui/verify/types.ts';
 import './ui/shell/shell.css';
@@ -88,6 +89,7 @@ function Lab() {
           <VerifyView key={handoff ? handoff.received.signature.join(',').slice(0, 64) : 'none'} initial={handoff} />
         )}
       </main>
+      <Footer />
     </div>
   );
 }

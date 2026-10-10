@@ -1,7 +1,7 @@
-import { expect, tab, test } from './fixtures.ts';
+import { expect, open, tab, test } from './fixtures.ts';
 
 test('lesson 1: the hash playground computes real SHA-256 and shows the avalanche effect', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Learn');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Hashing: a fingerprint for data');
 
@@ -23,7 +23,7 @@ test('lesson 1: the hash playground computes real SHA-256 and shows the avalanch
 });
 
 test('lesson 2: real signing; editing the message or switching keys breaks verification', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Learn');
   await page.getByRole('button', { name: /Signing and verifying/ }).click();
   await page.getByRole('button', { name: 'Generate an RSA-2048 key pair' }).click();
@@ -42,7 +42,7 @@ test('lesson 2: real signing; editing the message or switching keys breaks verif
 });
 
 test('a lesson task links into the lab, is detected when done, and keeps your place', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Learn');
   await page.getByRole('button', { name: /Certificates: whose key is this/ }).click();
   await page.getByRole('button', { name: 'Open the lab bench' }).click();
@@ -60,7 +60,7 @@ test('a lesson task links into the lab, is detected when done, and keeps your pl
 });
 
 test('glossary and projector mode', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Learn');
   await page.getByRole('button', { name: 'Glossary' }).click();
   await expect(page.locator('.glossary dt', { hasText: /^pathlen$/ })).toBeVisible();
@@ -74,4 +74,19 @@ test('glossary and projector mode', async ({ page }) => {
   await expect(toggle).toHaveAttribute('aria-pressed', 'true');
   await toggle.click();
   expect(await size()).toBe('16px');
+});
+
+test('the footer links to the source, licence and feedback, opening safely in a new tab', async ({ page }) => {
+  await open(page);
+  const footer = page.locator('footer');
+  await expect(footer).toContainText('Mahtem 1.0.0');
+  for (const [name, href] of [
+    ['Source code', 'https://github.com/EdomiyasGitHub/mahtem'],
+    ['Apache 2.0 licence', 'https://github.com/EdomiyasGitHub/mahtem/blob/main/LICENSE'],
+    ['Report a problem or suggest a lesson', 'https://github.com/EdomiyasGitHub/mahtem/issues/new/choose'],
+  ] as const) {
+    const link = footer.getByRole('link', { name });
+    await expect(link).toHaveAttribute('href', href);
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  }
 });

@@ -1,7 +1,7 @@
-import { buildLabOnBench, expect, tab, test } from './fixtures.ts';
+import { buildLabOnBench, expect, open, tab, test } from './fixtures.ts';
 
 test('the trust chain draws each link only after verifying it, and logs each once', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Trust chain');
   await expect(page.getByText('There is no chain yet.')).toBeVisible();
 
@@ -20,7 +20,7 @@ test('the trust chain draws each link only after verifying it, and logs each onc
 });
 
 test('the inspector shows fields, explained extensions, ASN.1 and PEM', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await buildLabOnBench(page);
   await tab(page, 'Trust chain');
 
