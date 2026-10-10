@@ -75,3 +75,25 @@ describe('lesson progress', () => {
     expect(lessonStatus(certs, allRight, withRoot).done).toBe(true);
   });
 });
+
+describe('shuffle', () => {
+  it('returns a permutation and leaves the input untouched', async () => {
+    const { shuffle } = await import('../../src/learn/shuffle.ts');
+    const input = [0, 1, 2, 3, 4];
+    const out = shuffle(input);
+    expect([...out].sort()).toEqual(input);
+    expect(input).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it('puts a three-option question’s correct answer in every position, roughly equally', async () => {
+    const { shuffle } = await import('../../src/learn/shuffle.ts');
+    const counts = [0, 0, 0];
+    for (let i = 0; i < 3000; i++) counts[shuffle([0, 1, 2]).indexOf(0)]! += 1;
+    for (const c of counts) expect(c).toBeGreaterThan(850); // expected 1000 each
+  });
+
+  it('is deterministic with an injected random source', async () => {
+    const { shuffle } = await import('../../src/learn/shuffle.ts');
+    expect(shuffle([1, 2, 3], () => 0)).toEqual([2, 3, 1]);
+  });
+});

@@ -4,6 +4,7 @@ import { BenchView } from './ui/bench/BenchView.tsx';
 import { ChainView } from './ui/chain/ChainView.tsx';
 import { AttackBench, type AttackMemory } from './ui/attacks/AttackBench.tsx';
 import { LearnView, type LessonProgress, initialLessonProgress } from './ui/learn/LearnView.tsx';
+import { ExercisesView } from './ui/exercises/ExercisesView.tsx';
 import type { AttackRun } from './state/attacks.ts';
 import { Header, type View } from './ui/shell/Header.tsx';
 import { VerifyView } from './ui/verify/VerifyView.tsx';
@@ -15,6 +16,7 @@ import './ui/verify/verify.css';
 import './ui/chain/chain.css';
 import './ui/attacks/attacks.css';
 import './ui/learn/learn.css';
+import './ui/exercises/exercises.css';
 
 function Lab() {
   const { state, reset } = useLab();
@@ -24,6 +26,8 @@ function Lab() {
   const [attackMemory, setAttackMemory] = useState<AttackMemory>({ runs: {}, selected: null });
   const [lessonProgress, setLessonProgress] = useState<LessonProgress>(initialLessonProgress);
   const [projector, setProjector] = useState(false);
+  // Bumped by "Reset lab", so exercises built from the old lab's keys are discarded too.
+  const [labGeneration, setLabGeneration] = useState(0);
 
   // Projector mode scales every rem-based size at once.
   useEffect(() => {
@@ -54,9 +58,13 @@ function Lab() {
     <div className="shell">
       <Header view={view} onNavigate={setView} canReset={hasProgress && state.busy === null}
         projector={projector} onProjector={setProjector}
-        onReset={() => { reset(); setAttackOnDesk(null); setAttackMemory({ runs: {}, selected: null }); setView('bench'); }} />
+        onReset={() => { reset(); setAttackOnDesk(null); setAttackMemory({ runs: {}, selected: null }); setLabGeneration((g) => g + 1); setView('bench'); }} />
       <main className="shell__main" id="main">
-        {view === 'learn' ? (
+        {/* Exercises stay mounted (hidden) so a round or signed messages survive switching tabs. */}
+        <div hidden={view !== 'exercises'}>
+          <ExercisesView key={labGeneration} />
+        </div>
+        {view === 'exercises' ? null : view === 'learn' ? (
           <LearnView progress={lessonProgress} onProgress={setLessonProgress} onNavigate={setView} />
         ) : view === 'bench' ? (
           <BenchView onOpenVerifier={() => { setAttackOnDesk(null); setView('verify'); }} />

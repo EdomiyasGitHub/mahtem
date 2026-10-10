@@ -1,4 +1,4 @@
-export type View = 'learn' | 'bench' | 'chain' | 'attacks' | 'verify';
+export type View = 'learn' | 'bench' | 'chain' | 'attacks' | 'verify' | 'exercises';
 
 export function Header(props: {
   view: View;
@@ -30,6 +30,7 @@ export function Header(props: {
         {tab('chain', 'Trust chain')}
         {tab('attacks', 'Attack bench')}
         {tab('verify', 'Verifier desk')}
+        {tab('exercises', 'Exercises')}
       </nav>
       <div className="masthead__end">
         <p className="masthead__custody">Keys stay in this tab and are never sent anywhere.</p>
