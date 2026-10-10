@@ -5,7 +5,9 @@
 ## Decision
 - **Host on Cloudflare Workers static assets** (`wrangler.jsonc`), serving `dist/` with no Worker script.
 - **Deploy from GitHub Actions**, not from Cloudflare's own build system, and only after the `check` and `browser` jobs pass on `main`.
-- **Check the live site after every deployment:** the job fails unless the deployed URL serves the Content-Security-Policy with `connect-src 'none'` and `X-Frame-Options: DENY`.
+- **Check the live site after every deployment** (`scripts/verify-live.sh`): poll for up to 3 minutes until the deployed URL serves **this build** (identified by its content-hashed script file name), then require the Content-Security-Policy with `connect-src 'none'`, `X-Frame-Options: DENY` and `nosniff`.
+
+  *First-deploy lesson (2026-10-10):* the original check ran seconds after upload and met Cloudflare's generic 404 while the new Worker propagated; `curl --retry` does not retry 404s. Polling for the specific build also prevents a later deploy from passing on the previous version.
 
 ## Why
 | Option | Assessment |

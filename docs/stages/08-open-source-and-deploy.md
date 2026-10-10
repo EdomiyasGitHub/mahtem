@@ -1,6 +1,6 @@
 # Stage 8 — Open source and deployment (classroom edition, stages A and B)
 
-**Status:** done in the repository; awaiting the owner's first push and secrets
+**Status:** done. Live at https://mahtem.rann.workers.dev
 **Date:** 2026-10-10
 
 ## What we built
@@ -15,3 +15,8 @@
 
 ## Owner's steps
 Create the empty GitHub repository, push, add two secrets, enable private vulnerability reporting. The first push to `main` deploys.
+
+## First deployment (2026-10-10)
+- `check` and `browser` passed on GitHub's runners; `deploy` uploaded successfully, and the site serves correctly.
+- The post-deploy check failed on a propagation 404 from Cloudflare's edge (not from Mahtem: `x-frame-options: SAMEORIGIN`, no CSP). Replaced with `scripts/verify-live.sh`, which polls for this exact build. Tested locally: passes against a server serving this build; fails against an older build (HTTP 200 but the wrong script); fails against the right build without security headers.
+- Dependabot's TypeScript 7 pull request was correctly blocked by CI (peer range); major TypeScript updates are now ignored until the linter supports them.

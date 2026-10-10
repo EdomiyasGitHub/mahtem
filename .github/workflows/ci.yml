@@ -86,14 +86,11 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: '4.141.0'
           command: deploy
-      # Check the LIVE site: it must serve the strict Content-Security-Policy.
-      - name: Verify live security headers
+      # Check the LIVE site serves THIS build, with the strict security headers.
+      # A new deployment takes a little while to reach Cloudflare's network, so poll
+      # (curl --retry does not retry on 404). The build's script file name changes with
+      # every build, so finding it proves the new version, not the previous one, is live.
+      - name: Verify the live site
         env:
           URL: ${{ steps.deploy.outputs.deployment-url }}
-        run: |
-          test -n "$URL" || { echo "No deployment URL reported"; exit 1; }
-          headers=$(curl -sSI --retry 5 --retry-delay 3 "$URL")
-          echo "$headers"
-          echo "$headers" | grep -qi "content-security-policy:.*connect-src 'none'"
-          echo "$headers" | grep -qi "x-frame-options: DENY"
-          echo "Live site serves the security headers."
+        run: bash scripts/verify-live.sh "$URL" dist/index.html
