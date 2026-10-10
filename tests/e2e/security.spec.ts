@@ -20,7 +20,7 @@ test('the page cannot send data anywhere, even when script tries', async ({ page
   await page.addInitScript(() => {
     document.addEventListener('securitypolicyviolation', (e) => (window as unknown as { __reportCsp: (d: string) => void }).__reportCsp(e.violatedDirective));
   });
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   for (const url of ['https://example.com/steal?key=1', '/same-origin']) {
     const outcome = await page.evaluate((u) => fetch(u).then(() => 'sent', () => 'blocked'), url);
     expect(outcome, url).toBe('blocked');
@@ -31,7 +31,7 @@ test('the page cannot send data anywhere, even when script tries', async ({ page
 for (const view of ['Lab bench', 'Trust chain', 'Attack bench', 'Verifier desk'] as const) {
   test(`${view} fits a 390 px phone screen`, async ({ browser }) => {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.getByRole('navigation', { name: 'Sections' }).getByRole('button', { name: view }).click();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
     expect(overflow).toBe(false);

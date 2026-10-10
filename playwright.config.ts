@@ -12,6 +12,9 @@ export default defineConfig({
   timeout: 120_000,
   expect: { timeout: 30_000 },
   workers: 1,
+  // In CI, retry a failed test once. A test that passes only on retry is reported
+  // as "flaky", visibly, so infrastructure glitches can't block a merge and can't hide.
+  retries: process.env.CI ? 1 : 0,
   reporter: [['list']],
   use: { baseURL: 'http://localhost:4173', trace: 'retain-on-failure', acceptDownloads: true },
   webServer: {

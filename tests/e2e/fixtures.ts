@@ -26,6 +26,13 @@ export const test = base.extend({
 
 export { expect };
 
+/**
+ * Open a page and wait until its content has loaded, not for every font file
+ * ("load"). Each test then waits for the elements it needs, so nothing is less
+ * strict, but one slow font request can no longer stall a test (seen once in CI).
+ */
+export const open = (page: Page, path = '/') => page.goto(path, { waitUntil: 'domcontentloaded' });
+
 export const tab = (page: Page, name: 'Learn' | 'Lab bench' | 'Trust chain' | 'Attack bench' | 'Verifier desk' | 'Exercises') =>
   page.getByRole('navigation', { name: 'Sections' }).getByRole('button', { name }).click();
 

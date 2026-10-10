@@ -1,4 +1,4 @@
-import { expect, tab, test } from './fixtures.ts';
+import { expect, open, tab, test } from './fixtures.ts';
 
 const EXPECTED = [
   'Verified', 'Caught at check 3', 'Caught at check 3', 'Caught at check 3', 'Caught at check 6',
@@ -6,7 +6,7 @@ const EXPECTED = [
 ];
 
 test('every attack is caught where expected, and the path shows why', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Attack bench');
   await page.getByRole('button', { name: 'Set up the whole lab' }).click();
   await page.getByRole('button', { name: 'Run all ten' }).click();
@@ -18,24 +18,24 @@ test('every attack is caught where expected, and the path shows why', async ({ p
     await expect(rows.nth(i).locator('.scenario__match')).toHaveText('as expected');
   }
 
-  const open = (n: number) => rows.nth(n - 1).locator('.scenario__result').click();
+  const openCase = (n: number) => rows.nth(n - 1).locator('.scenario__result').click();
 
-  await open(5); // rogue root
+  await openCase(5); // rogue root
   await expect(page.locator('.path-end')).toContainText('this one is an impostor');
   await expect(page.locator('.path .node--bad')).toHaveCount(0);
 
-  await open(8); // University acts as a CA: two certificates at fault
+  await openCase(8); // University acts as a CA: two certificates at fault
   await expect(page.locator('.path .node--bad .node__name')).toHaveText(['Demo MoE Issuing CA', 'Abay Valley University Diploma Signing']);
 
-  await open(6); // missing intermediate
+  await openCase(6); // missing intermediate
   await expect(page.locator('.path-end')).toContainText('Missing issuer');
 
-  await open(2); // tampering: chain intact, document link broken
+  await openCase(2); // tampering: chain intact, document link broken
   await expect(page.locator('.path-end')).toContainText('In your trust store');
   await expect(page.locator('.path .edge--document.edge--failed')).toHaveCount(1);
 
   // Hand an attack to the desk, come back, results still there
-  await open(5);
+  await openCase(5);
   await page.getByRole('button', { name: 'Open on the verifier desk' }).click();
   await expect(page.locator('.verdict-banner__title')).toHaveText('Verification failed at check 6');
   await expect(page.locator('.verify__source')).toContainText('Scenario 5');

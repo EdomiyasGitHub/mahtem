@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
-import { expect, tab, test } from './fixtures.ts';
+import { expect, open, tab, test } from './fixtures.ts';
 
 test('Spot the fake: a full round, scored from the verifier’s real results', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Exercises');
   await page.getByRole('button', { name: 'Set up the whole lab' }).click();
   await page.getByRole('button', { name: 'Start a round of six cases' }).click();
@@ -26,7 +26,7 @@ test('Spot the fake: a full round, scored from the verifier’s real results', a
 });
 
 test('Spot the fake: progress survives switching tabs', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Exercises');
   await page.getByRole('button', { name: 'Set up the whole lab' }).click();
   await page.getByRole('button', { name: 'Start a round of six cases' }).click();
@@ -38,7 +38,7 @@ test('Spot the fake: progress survives switching tabs', async ({ page }) => {
 });
 
 test('Three messages: sign, secretly change two, the partner finds them, also from a downloaded file', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Exercises');
   await page.getByRole('button', { name: 'Three messages (course §6)' }).click();
   await page.getByRole('button', { name: 'Generate a key and sign all three' }).click();
@@ -77,7 +77,7 @@ test('Three messages: sign, secretly change two, the partner finds them, also fr
 });
 
 test('Three messages: a broken or hostile file is refused with a clear message', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Exercises');
   await page.getByRole('button', { name: 'Three messages (course §6)' }).click();
   await page.getByRole('button', { name: 'I’m the partner' }).click();

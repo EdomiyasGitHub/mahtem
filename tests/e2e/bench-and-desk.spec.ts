@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
-import { buildLabOnBench, expect, tab, test } from './fixtures.ts';
+import { buildLabOnBench, expect, open, tab, test } from './fixtures.ts';
 
 test('issue a diploma on the bench, verify it, tamper with it, restore it', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await expect(page.getByText('Instrument check: this browser can run the lab')).toBeVisible();
   await buildLabOnBench(page, { sign: false });
 
@@ -44,7 +44,7 @@ test('issue a diploma on the bench, verify it, tamper with it, restore it', asyn
 });
 
 test('the verifier desk explains how to begin when nothing has arrived', async ({ page }) => {
-  await page.goto('/');
+  await open(page);
   await tab(page, 'Verifier desk');
   await expect(page.getByText('No diploma has arrived yet.')).toBeVisible();
 });
