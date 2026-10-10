@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { LabProvider, useLab } from './state/LabProvider.tsx';
 import { BenchView } from './ui/bench/BenchView.tsx';
 import { ChainView } from './ui/chain/ChainView.tsx';
 import { AttackBench, type AttackMemory } from './ui/attacks/AttackBench.tsx';
+import { LearnView, type LessonProgress, initialLessonProgress } from './ui/learn/LearnView.tsx';
 import type { AttackRun } from './state/attacks.ts';
 import { Header, type View } from './ui/shell/Header.tsx';
 import { VerifyView } from './ui/verify/VerifyView.tsx';
@@ -13,6 +14,7 @@ import './ui/bench/bench.css';
 import './ui/verify/verify.css';
 import './ui/chain/chain.css';
 import './ui/attacks/attacks.css';
+import './ui/learn/learn.css';
 
 function Lab() {
   const { state, reset } = useLab();
@@ -20,6 +22,14 @@ function Lab() {
   // An attack opened on the desk replaces the lab diploma there until the bench hands over a new one.
   const [attackOnDesk, setAttackOnDesk] = useState<{ id: number; run: AttackRun } | null>(null);
   const [attackMemory, setAttackMemory] = useState<AttackMemory>({ runs: {}, selected: null });
+  const [lessonProgress, setLessonProgress] = useState<LessonProgress>(initialLessonProgress);
+  const [projector, setProjector] = useState(false);
+
+  // Projector mode scales every rem-based size at once.
+  useEffect(() => {
+    if (projector) document.documentElement.dataset.projector = 'on';
+    else delete document.documentElement.dataset.projector;
+  }, [projector]);
 
   // The hand-off to the verifier: certificates and bytes only, never a key pair.
   const handoff = useMemo((): { received: ReceivedBundle; anchors: Anchor[] } | null => {
@@ -43,9 +53,12 @@ function Lab() {
   return (
     <div className="shell">
       <Header view={view} onNavigate={setView} canReset={hasProgress && state.busy === null}
+        projector={projector} onProjector={setProjector}
         onReset={() => { reset(); setAttackOnDesk(null); setAttackMemory({ runs: {}, selected: null }); setView('bench'); }} />
       <main className="shell__main" id="main">
-        {view === 'bench' ? (
+        {view === 'learn' ? (
+          <LearnView progress={lessonProgress} onProgress={setLessonProgress} onNavigate={setView} />
+        ) : view === 'bench' ? (
           <BenchView onOpenVerifier={() => { setAttackOnDesk(null); setView('verify'); }} />
         ) : view === 'chain' ? (
           <ChainView onOpenBench={() => setView('bench')} />

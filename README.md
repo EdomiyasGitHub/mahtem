@@ -19,7 +19,11 @@
 | Chain validation and the trust store | Verifier desk: seven checks; un-trust the root and watch it fail |
 | Attacks: tampering, signature swaps, impostor roots, pathlen breaches, expired certificates | Attack bench: ten live scenarios |
 
-## The four places
+## Start with the lessons
+
+The **Learn** tab has six short guided lessons tied to the course: read a little, try it (two playgrounds run real SHA-256 and RSA signing in the browser, the others send you into the lab), then check your understanding with a short quiz. A glossary explains every term. For classrooms, **Projector** enlarges the whole interface.
+
+## The four places of the lab
 
 - **Lab bench:** build Root CA → Ministry of Education CA → University, in the order of the course practical, then sign a diploma. Every step shows its real result and the equivalent OpenSSL command.
 - **Trust chain:** each link is drawn only after its signature verifies. Inspect any certificate: fields, extensions, ASN.1 structure, PEM.
@@ -55,8 +59,8 @@ npm run interop -- verify-bundle <folder>
 ## Tests
 
 ```bash
-npm run check        # type check, lint, 215 unit and integration tests, build, bundle check
-npm run test:e2e     # 11 browser tests (first time: npx playwright install chromium)
+npm run check        # type check, lint, 224 unit and integration tests, build, bundle check
+npm run test:e2e     # 15 browser tests (first time: npx playwright install chromium)
 ```
 
 The test suite runs the real OpenSSL program and requires the same answers as the app, including byte-identical signatures. Every browser test fails on any security-policy violation or console error.

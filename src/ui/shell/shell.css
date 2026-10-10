@@ -88,6 +88,27 @@
 }
 
 /* The custody note is repeated in the bench introduction; drop it from a crowded header. */
-@media (max-width: 72rem) {
+@media (max-width: 90rem) {
   .masthead__custody { display: none; }
+}
+/* Above phone width the header is one row: the tabs shrink and scroll sideways if needed. */
+@media (min-width: 64rem) {
+  .masthead { flex-wrap: nowrap; }
+  .masthead__brand, .masthead__end { flex: none; }
+  .nav { flex: 1 1 auto; min-width: 0; }
+}
+
+/* Projector mode: every size is rem-based, so scaling the root scales the whole interface. */
+html[data-projector='on'] { font-size: 125%; }
+html[data-projector='on'] .masthead__custody { display: none; }
+
+/* Six tabs no longer fit beside the brand on narrow screens: let the tabs scroll sideways. */
+.nav { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: thin; }
+.nav__tab { white-space: nowrap; }
+
+.projector-toggle[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+@media (max-width: 72rem) {
+  .masthead__role { display: none; }
+  .nav__tab { padding-inline: var(--space-2); }
+  .masthead { gap: var(--space-3) var(--space-4); }
 }
