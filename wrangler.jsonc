@@ -1,0 +1,11 @@
+// Cloudflare Workers static assets: serves the built dist/ folder from Cloudflare's network.
+// There is no Worker script: Mahtem has no server code. dist/_headers (generated from
+// security/headers.ts) applies the Content-Security-Policy and other headers.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mahtem",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

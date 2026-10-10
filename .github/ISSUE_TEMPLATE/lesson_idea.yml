@@ -1,0 +1,21 @@
+name: Teaching idea
+description: A lesson, exercise, scenario or explanation that would help students
+labels: [teaching]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should students be able to see, do, or understand?
+    validations:
+      required: true
+  - type: input
+    id: course
+    attributes:
+      label: Related course topic (optional)
+      placeholder: Certificate chains, pathlen, revocation…
+  - type: dropdown
+    id: role
+    attributes:
+      label: You are a…
+      options: [Student, Instructor, Other]

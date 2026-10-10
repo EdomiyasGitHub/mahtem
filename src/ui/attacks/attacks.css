@@ -1,0 +1,55 @@
+.attacks { display: grid; gap: var(--space-5); }
+.attacks__setup { display: grid; gap: var(--space-3); max-width: 44rem; background: var(--surface); border: 1px dashed var(--rule); border-radius: var(--radius-panel); padding: var(--space-5); }
+.attacks__setup p { margin: 0; }
+.attacks__grid { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: flex-start; }
+.attacks__list { flex: 1 1 26rem; min-width: 0; display: grid; gap: var(--space-3); }
+.attacks__toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.attacks__tally { color: var(--ink-2); font-size: var(--step--1); }
+
+.scenarios { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-panel); }
+.scenario { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--rule-soft); }
+.scenario:last-child { border-bottom: 0; }
+.scenario--selected { background: #f7f8fc; }
+.scenario__n { font-family: var(--font-data); color: var(--ink-3); padding-top: 2px; }
+.scenario__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); }
+.scenario__title { font-size: var(--step-0); font-weight: 600; }
+.scenario__story { margin: var(--space-1) 0 var(--space-3); color: var(--ink-2); font-size: var(--step--1); }
+.scenario__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.scenario__result {
+  display: inline-flex; gap: var(--space-2); align-items: baseline; font: inherit; font-size: var(--step--1);
+  background: transparent; border: 0; border-bottom: 1px dashed var(--rule); padding: var(--space-2) 0; cursor: pointer; min-height: 44px;
+}
+.scenario__match { color: var(--ink-3); }
+.pass-text { color: var(--pass); font-weight: 600; }
+.fail-text { color: var(--fail); font-weight: 600; }
+
+.attack-result {
+  flex: 999 1 30rem; min-width: 0; display: grid; gap: var(--space-3); align-content: start;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-panel); padding: var(--space-5);
+  position: sticky; top: var(--space-4); max-height: calc(100vh - 2 * var(--space-4)); overflow-y: auto;
+}
+.attack-result p { margin: 0; }
+.attack-result__empty { color: var(--ink-3); }
+.attack-result__title { font-size: var(--step-2); font-weight: 600; }
+.attack-result__story { color: var(--ink-2); }
+.attack-result__expect { color: var(--ink-2); font-size: var(--step--1); }
+.attack-result__expect--bad { color: var(--fail); font-weight: 600; }
+.attack-result__lesson { color: var(--ink); }
+.attack-result .section-title { margin: var(--space-3) 0 0; }
+.attack-result > .button { justify-self: start; }
+
+/* Path diagram (reuses .node and .edge from the chain view) */
+.path { display: flex; flex-direction: column; }
+.path-end { padding: var(--space-3) var(--space-4); border-radius: var(--radius-panel); font-size: var(--step--1); border: 1px dashed; }
+.path-end--ok { border-color: #9ccbb3; background: var(--pass-tint); color: #0b5537; }
+.path-end--bad { border-color: #e2a797; background: var(--fail-tint); color: #8a2412; overflow-wrap: anywhere; }
+.edge--short { min-height: 1.75rem; }
+.node--static { cursor: default; }
+.node--static:hover { border-color: var(--rule); }
+.node--bad { border: 2px solid var(--fail); background: #fdf4f1; padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px); }
+.node--bad:hover { border-color: var(--fail); }
+.node__findings { margin: var(--space-1) 0 0; padding-left: var(--space-4); color: #8a2412; font-size: var(--step--1); }
+
+@media (max-width: 60rem) {
+  .attack-result { position: static; max-height: none; }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "mahtem",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An interactive PKI laboratory: Root CA → Intermediate CA → University → signed diploma, using real browser cryptography.",
+  "license": "Apache-2.0",
+  "author": "EdomiyasGitHub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdomiyasGitHub/mahtem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EdomiyasGitHub/mahtem/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24",
+    "npm": ">=11"
+  },
+  "packageManager": "npm@11.20.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "verify:dist": "node scripts/verify-dist.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build && npm run verify:dist",
+    "interop": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/interop.ts",
+    "smoke": "vite build --config vite.smoke.config.ts && vite preview --config vite.smoke.config.ts",
+    "test:e2e": "npm run build && playwright test"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@fontsource/noto-sans-ethiopic": "5.3.0",
+    "@fontsource/noto-serif": "5.3.0",
+    "@fontsource/noto-serif-ethiopic": "5.3.0",
+    "@peculiar/x509": "2.1.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "reflect-metadata": "0.2.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.56.0",
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "eslint": "10.11.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.12.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.1",
+    "vite": "8.3.1",
+    "vitest": "5.0.1"
+  }
+}

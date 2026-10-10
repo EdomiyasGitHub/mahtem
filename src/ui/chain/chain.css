@@ -1,0 +1,98 @@
+.chain-layout { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: flex-start; }
+.chain { flex: 999 1 30rem; min-width: 0; max-width: 46rem; display: flex; flex-direction: column; }
+.chain .intro__lede { margin: var(--space-2) 0 var(--space-5); max-width: 40rem; }
+.chain-empty { display: grid; gap: var(--space-3); max-width: 40rem; justify-items: start; }
+
+.truststore-box {
+  display: flex; gap: var(--space-3); align-items: center;
+  padding: var(--space-3) var(--space-4); border: 1px dashed #a9ada3; border-radius: var(--radius-panel);
+  color: var(--ink-2); font-size: var(--step--1);
+}
+.truststore-box strong { color: var(--ink); font-weight: 600; }
+
+/* Certificate nodes */
+.node {
+  display: grid; gap: var(--space-2); text-align: left; width: 100%;
+  font: inherit; color: inherit; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-panel);
+  padding: var(--space-4) var(--space-5);
+}
+.node:hover { border-color: var(--ink-3); }
+.node--selected { border: 2px solid var(--action); padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px); }
+.node__top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); }
+.node__role { color: var(--ink-3); font-size: var(--step--1); }
+.node--selected .node__role { color: var(--action); font-weight: 500; }
+.node__constraints { font-family: var(--font-data); font-size: var(--step--1); color: var(--ink-2); }
+.node__name { font-size: var(--step-1); font-weight: 600; }
+.node__facts { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); color: var(--ink-2); font-size: var(--step--1); }
+.node__k { color: var(--ink-3); margin-right: var(--space-1); }
+.node__extra { color: var(--ink-3); font-size: var(--step--1); }
+.node--missing { cursor: default; border-style: dashed; background: transparent; justify-items: start; }
+.node--missing:hover { border-color: var(--rule); }
+.node--document { border-style: dashed; background: #fafaf8; }
+
+/* Edges: the one animated element. A link is drawn only after its signature verifies. */
+.edge { display: grid; grid-template-columns: 2px minmax(0, 1fr); gap: var(--space-3); padding-left: var(--space-6); min-height: 4.25rem; }
+.edge--anchor { min-height: 1.5rem; }
+.edge__line { position: relative; width: 2px; background-image: linear-gradient(var(--rule) 50%, transparent 0); background-size: 2px 8px; }
+.edge__line::after {
+  content: ''; position: absolute; inset: 0; background: var(--ink);
+  transform: scaleY(0); transform-origin: top; transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.edge--anchor .edge__line::after { transform: scaleY(1); background: #a9ada3; }
+.edge--verified .edge__line::after { transform: scaleY(1); }
+.edge--document.edge--verified .edge__line::after { background: repeating-linear-gradient(var(--ink) 0 6px, transparent 6px 10px); }
+.edge--failed .edge__line::after { transform: scaleY(1); background: var(--fail); }
+.edge--instant .edge__line::after { transition: none; }
+.edge__text { align-self: center; display: grid; gap: 2px; font-size: var(--step--1); padding: var(--space-2) 0; }
+.edge__ok { color: var(--pass); font-weight: 500; }
+.edge__bad { color: var(--fail); font-weight: 500; }
+.edge__pending { color: var(--ink-3); }
+
+/* Inspector */
+.inspector {
+  flex: 1 1 26rem; min-width: 0; position: sticky; top: var(--space-4);
+  max-height: calc(100vh - 2 * var(--space-4)); overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-panel);
+  padding: var(--space-5);
+}
+.inspector__kicker { margin: 0; color: var(--ink-3); font-size: var(--step--1); }
+.inspector__title { font-size: var(--step-1); font-weight: 600; margin: var(--space-1) 0 var(--space-3); }
+.inspector__note { color: var(--ink-2); font-size: var(--step--1); margin: var(--space-3) 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: var(--space-1); border-bottom: 1px solid var(--rule-soft); padding-bottom: var(--space-3); }
+.tabs__tab {
+  font: inherit; font-size: var(--step--1); min-height: 36px; padding: 0 var(--space-3);
+  border: 0; border-radius: var(--radius-control); background: transparent; color: var(--ink-2); cursor: pointer;
+}
+.tabs__tab[aria-selected='true'] { background: var(--ink); color: #fff; }
+.facts--wide .facts__row { grid-template-columns: 11rem minmax(0, 1fr); }
+
+.ext-list { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-3); }
+.ext { background: #f6f7f4; border-radius: var(--radius-control); padding: var(--space-3) var(--space-4); }
+.ext__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-3); }
+.ext__name { font-weight: 600; }
+.ext__critical { font-size: var(--step--1); color: var(--ink-2); border: 1px solid var(--rule); border-radius: 4px; padding: 0 var(--space-2); }
+.ext__value { display: block; margin-top: var(--space-1); font-family: var(--font-data); font-size: var(--step--1); overflow-wrap: anywhere; }
+.ext__meaning { margin: var(--space-2) 0 0; color: var(--ink-2); font-size: var(--step--1); }
+
+.asn1, .asn1__children { list-style: none; margin: 0; padding: 0; }
+.asn1__children { padding-left: var(--space-4); border-left: 1px solid var(--rule-soft); margin-left: 6px; }
+.asn1__node { padding: 2px 0; font-size: var(--step--1); }
+.asn1 summary { cursor: pointer; }
+.asn1__head { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); max-width: 100%; }
+.asn1__label { font-weight: 600; }
+.asn1__type { font-family: var(--font-data); color: var(--ink-2); }
+.asn1__value { font-family: var(--font-data); color: var(--ink); overflow-wrap: anywhere; }
+.asn1__meta { color: var(--ink-3); }
+.asn1__node > .asn1__head { padding-left: 1.1em; }
+
+.pem { margin: 0 0 var(--space-3); padding: var(--space-3); max-height: 18rem; overflow: auto; background: #f6f7f4; border-radius: var(--radius-control); font-family: var(--font-data); font-size: 0.75rem; line-height: 1.5; }
+
+@media (max-width: 60rem) {
+  .inspector { position: static; max-height: none; }
+}
+@media (max-width: 40rem) {
+  .edge { padding-left: var(--space-4); }
+  .node { padding: var(--space-3) var(--space-4); }
+  .facts--wide .facts__row { grid-template-columns: 1fr; }
+}

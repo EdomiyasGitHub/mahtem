@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mahtem · PKI browser check</title>
+    <link rel="stylesheet" href="./smoke.css" />
+  </head>
+  <body>
+    <main>
+      <h1>PKI browser check</h1>
+      <p>Builds the full lab hierarchy in this browser, under the production security headers.</p>
+      <p id="status" role="status">Generating keys (two RSA-4096, one RSA-3072)…</p>
+      <ul id="results"></ul>
+    </main>
+    <script type="module" src="./pki.ts"></script>
+  </body>
+</html>

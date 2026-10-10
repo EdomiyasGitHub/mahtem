@@ -1,0 +1,5 @@
+body { font: 16px/1.5 system-ui, sans-serif; margin: 2rem; color: #15171c; background: #f3f4f1; }
+main { max-width: 44rem; }
+li { margin: 0.25rem 0; }
+.pass { color: #0e6b47; }
+.fail { color: #b1301a; }

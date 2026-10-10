@@ -1,0 +1,43 @@
+/* Mahtem design tokens — "paper, ink, seal".
+   Verdict colours (pass/fail) are reserved for verification results only. */
+:root {
+  --ground: #f3f4f1;        /* mineral paper */
+  --surface: #ffffff;
+  --ink: #15171c;           /* primary text */
+  --ink-2: #4a4f59;         /* secondary text, 8:1 on surface */
+  --ink-3: #5f6470;         /* tertiary text, 5.9:1 on surface */
+  --rule: #dadcd5;
+  --rule-soft: #ecede8;
+  --action: #233e99;        /* the one interactive colour */
+  --action-strong: #15286b;
+  --action-tint: #e7ebf7;
+  --pass: #0e6b47;
+  --pass-tint: #e3f1ea;
+  --fail: #b1301a;
+  --fail-tint: #f8e7e2;
+  --extension: #7a4b00;
+  --extension-tint: #fbf0dc;
+
+  --font-ui: 'IBM Plex Sans', 'Noto Sans Ethiopic', 'Segoe UI', system-ui, sans-serif;
+  --font-data: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-document: 'Noto Serif', 'Noto Serif Ethiopic', Georgia, serif;
+  --font-ethiopic: 'Noto Sans Ethiopic', 'Nyala', sans-serif;
+
+  /* Type scale: 1.2 minor third from 15px */
+  --step--1: 0.8125rem;
+  --step-0: 0.9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: 1.625rem;
+  --step-4: 2.125rem;
+
+  --radius-control: 6px;
+  --radius-panel: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+}

@@ -1,0 +1,7 @@
+# Keep LF line endings in the repository on every platform (including Windows),
+# so builds, hashes and test fixtures are identical everywhere.
+* text=auto eol=lf
+*.png binary
+*.woff binary
+*.woff2 binary
+*.sig binary
