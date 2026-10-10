@@ -1,15 +1,22 @@
 import { useId, useState } from 'react';
+import { shuffle } from '../../learn/shuffle.ts';
 import type { QuizQuestion } from '../../learn/lessons.ts';
 import { RichText } from './RichText.tsx';
 
 function Question({ q, onCorrect }: { q: QuizQuestion; onCorrect: (id: string) => void }) {
   const id = useId();
+  // Options are shuffled once per showing, so the right answer has no habitual position,
+  // and stay in that order while the student answers.
+  const [order] = useState(() => shuffle(q.options.map((_, i) => i)));
   const [chosen, setChosen] = useState<number | null>(null);
   const option = chosen !== null ? q.options[chosen] : undefined;
   return (
     <fieldset className="quiz__q">
       <legend className="quiz__prompt"><RichText text={q.prompt} /></legend>
-      {q.options.map((o, i) => (
+      {order.map((i) => {
+        const o = q.options[i];
+        if (!o) return null;
+        return (
         <label key={i} className="quiz__option">
           <input type="radio" name={id} checked={chosen === i}
             onChange={() => {
@@ -18,7 +25,8 @@ function Question({ q, onCorrect }: { q: QuizQuestion; onCorrect: (id: string) =
             }} />
           <span><RichText text={o.text} /></span>
         </label>
-      ))}
+        );
+      })}
       {option && (
         <p className={option.correct ? 'quiz__why quiz__why--right' : 'quiz__why quiz__why--wrong'} role="status">
           <strong>{option.correct ? 'Right.' : 'Not quite.'}</strong> <RichText text={option.why} />

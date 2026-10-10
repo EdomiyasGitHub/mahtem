@@ -92,7 +92,7 @@
   .masthead__custody { display: none; }
 }
 /* Above phone width the header is one row: the tabs shrink and scroll sideways if needed. */
-@media (min-width: 64rem) {
+@media (min-width: 72rem) {
   .masthead { flex-wrap: nowrap; }
   .masthead__brand, .masthead__end { flex: none; }
   .nav { flex: 1 1 auto; min-width: 0; }

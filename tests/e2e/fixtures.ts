@@ -26,7 +26,7 @@ export const test = base.extend({
 
 export { expect };
 
-export const tab = (page: Page, name: 'Learn' | 'Lab bench' | 'Trust chain' | 'Attack bench' | 'Verifier desk') =>
+export const tab = (page: Page, name: 'Learn' | 'Lab bench' | 'Trust chain' | 'Attack bench' | 'Verifier desk' | 'Exercises') =>
   page.getByRole('navigation', { name: 'Sections' }).getByRole('button', { name }).click();
 
 /** Click through the lab bench with the real key sizes (4096/4096/3072). */
