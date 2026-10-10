@@ -1,7 +1,14 @@
-export type View = 'bench' | 'chain' | 'attacks' | 'verify';
+export type View = 'learn' | 'bench' | 'chain' | 'attacks' | 'verify';
 
-export function Header(props: { view: View; onNavigate: (v: View) => void; canReset: boolean; onReset: () => void }) {
-  const { view, onNavigate, canReset, onReset } = props;
+export function Header(props: {
+  view: View;
+  onNavigate: (v: View) => void;
+  canReset: boolean;
+  onReset: () => void;
+  projector: boolean;
+  onProjector: (on: boolean) => void;
+}) {
+  const { view, onNavigate, canReset, onReset, projector, onProjector } = props;
   const tab = (v: View, label: string) => (
     <button type="button" className="nav__tab" aria-current={view === v ? 'page' : undefined} onClick={() => onNavigate(v)}>
       {label}
@@ -18,6 +25,7 @@ export function Header(props: { view: View; onNavigate: (v: View) => void; canRe
         <span className="masthead__role">PKI laboratory</span>
       </div>
       <nav className="nav" aria-label="Sections">
+        {tab('learn', 'Learn')}
         {tab('bench', 'Lab bench')}
         {tab('chain', 'Trust chain')}
         {tab('attacks', 'Attack bench')}
@@ -25,6 +33,10 @@ export function Header(props: { view: View; onNavigate: (v: View) => void; canRe
       </nav>
       <div className="masthead__end">
         <p className="masthead__custody">Keys stay in this tab and are never sent anywhere.</p>
+        <button type="button" className="button button--quiet projector-toggle" aria-pressed={projector} onClick={() => onProjector(!projector)}
+          title="Enlarge everything for a projector">
+          Projector
+        </button>
         <button type="button" className="button button--quiet" disabled={!canReset}
           onClick={() => {
             if (window.confirm('Reset the lab? All keys, certificates and the diploma are discarded.')) onReset();
